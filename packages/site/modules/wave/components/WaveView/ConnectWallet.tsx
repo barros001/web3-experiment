@@ -1,12 +1,12 @@
 import { FC } from 'react';
 import Alert from '@common/components/Alert';
 import useSnackbar from '@common/lib/hooks/use-snackbar';
+import useWallet from '@common/lib/hooks/use-wallet';
 
-type Props = {
-  connect: () => Promise<void>;
-};
+type Props = {};
 
-const ConnectWallet: FC<Props> = ({ connect }) => {
+const ConnectWallet: FC<Props> = () => {
+  const { connect } = useWallet();
   const { addItem } = useSnackbar();
 
   const doConnect = async () => {

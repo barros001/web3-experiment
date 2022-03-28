@@ -2,13 +2,14 @@ import { FC } from 'react';
 import Alert from '@common/components/Alert';
 import useSnackbar from '@common/lib/hooks/use-snackbar';
 import clsx from 'clsx';
+import useWallet from '@common/lib/hooks/use-wallet';
 
 type Props = {
-  connect: () => Promise<void>;
   className?: string;
 };
 
-const ConnectWalletButton: FC<Props> = ({ connect, className }) => {
+const ConnectWalletButton: FC<Props> = ({ className }) => {
+  const { connect } = useWallet();
   const { addItem } = useSnackbar();
 
   const doConnect = async () => {
@@ -21,7 +22,7 @@ const ConnectWalletButton: FC<Props> = ({ connect, className }) => {
   };
 
   const buttonClassName = clsx(
-    'border-sky-500 rounded text-white bg-sky-500',
+    'border-sky-500 rounded text-white bg-sky-500 px-3 py-2',
     className
   );
 

@@ -22,7 +22,7 @@ function MyApp({ Component, pageProps }: AppProps) {
       </Head>
       <ContextProvider>
         <Layout {...pageProps?.layoutProps}>
-          <DefaultSeo title="Wave Portal" />
+          <DefaultSeo title="Welcome" titleTemplate="%s | My web3 experiment" />
           <Component {...pageProps} />
         </Layout>
       </ContextProvider>

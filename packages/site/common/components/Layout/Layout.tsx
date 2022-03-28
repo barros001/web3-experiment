@@ -1,23 +1,52 @@
 import { FC } from 'react';
-import Image from 'next/image';
-import githubLogo from './github.png';
 import Wallet from './Wallet';
+import Link from 'next/link';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-const Layout: FC = ({ children }) => {
+type Props = {
+  selectedMenuItem?: string;
+};
+
+const Layout: FC<Props> = ({ selectedMenuItem, children }) => {
   return (
     <>
-      <div className="container mt-4 relative">
-        <div className="flex items-center justify-center">
-          <a
-            href="https://github.com/barros001/wave-portal"
-            target="_blank"
-            rel="noreferrer"
-          >
-            <Image src={githubLogo} width={35} height={35} />
-          </a>
-        </div>
-        <div className="absolute inset-y-0 right-0 flex items-center pb-2">
-          <Wallet />
+      <div className="px-4 py-3 border-b">
+        <div className="flex justify-between items-center">
+          <div className="mr-6 text-4xl">
+            <Link href="/">🦄</Link>
+          </div>
+          <div className="flex items-center">
+            <Link href="/wave">
+              <a
+                className={`mr-5 text-base font-medium text-gray-500 hover:text-gray-900 ${
+                  selectedMenuItem === 'wave' ? 'text-gray-900' : null
+                }`}
+              >
+                Wave @ Me!
+              </a>
+            </Link>
+            <Link href="/nft">
+              <a
+                className={`mr-5 text-base font-medium text-gray-500 hover:text-gray-900 ${
+                  selectedMenuItem === 'nft' ? 'text-gray-900' : null
+                }`}
+              >
+                Mint an NFT
+              </a>
+            </Link>
+            <a
+              href="https://github.com/barros001/wave-portal"
+              target="_blank"
+              rel="noreferrer"
+              title="Fork me on GitHub!"
+              className="text-2xl"
+            >
+              <FontAwesomeIcon icon={['fab', 'github']} />
+            </a>
+          </div>
+          <div className="ml-auto">
+            <Wallet />
+          </div>
         </div>
       </div>
       <div className="container pt-10 px-4">{children}</div>
