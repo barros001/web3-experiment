@@ -2,12 +2,16 @@ import { FC } from 'react';
 import Wallet from './Wallet';
 import Link from 'next/link';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import Snackbar from '@common/components/Snackbar';
+import useSnackbar from '@common/lib/hooks/use-snackbar';
 
 type Props = {
   selectedMenuItem?: string;
 };
 
 const Layout: FC<Props> = ({ selectedMenuItem, children }) => {
+  const { items } = useSnackbar();
+
   return (
     <>
       <div className="px-4 py-3 border-b">
@@ -50,6 +54,7 @@ const Layout: FC<Props> = ({ selectedMenuItem, children }) => {
         </div>
       </div>
       <div className="container pt-10 px-4">{children}</div>
+      <Snackbar items={items} />
     </>
   );
 };
