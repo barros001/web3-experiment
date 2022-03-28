@@ -1,7 +1,8 @@
 module.exports = Object.assign({
   content: [
     './pages/**/*.{js,ts,jsx,tsx}',
-    './components/**/*.{js,ts,jsx,tsx}',
+    './common/components/**/*.{js,ts,jsx,tsx}',
+    './modules/**/components/**/*.{js,ts,jsx,tsx}',
   ],
   plugins: [],
   safelist: [
