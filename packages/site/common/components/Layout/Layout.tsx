@@ -15,7 +15,7 @@ const Layout: FC<Props> = ({ selectedMenuItem, children }) => {
   return (
     <>
       <div className="px-4 py-3 border-b">
-        <div className="flex justify-between items-center">
+        <div className="flex justify-start items-center">
           <div className="mr-6 text-4xl">
             <Link href="/">🦄</Link>
           </div>
@@ -48,7 +48,7 @@ const Layout: FC<Props> = ({ selectedMenuItem, children }) => {
               <FontAwesomeIcon icon={['fab', 'github']} />
             </a>
           </div>
-          <div className="ml-auto">
+          <div className="hidden sm:block ml-auto">
             <Wallet />
           </div>
         </div>
