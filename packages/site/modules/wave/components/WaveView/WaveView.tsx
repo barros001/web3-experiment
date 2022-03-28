@@ -1,11 +1,11 @@
 import { FC } from 'react';
-import useWallet from '@lib/hooks/use-wallet';
-import Loading from '@components/Loading';
+import useWallet from '@common/lib/hooks/use-wallet';
+import Loading from '@common/components/Loading';
+import useSnackbar from '@common/lib/hooks/use-snackbar';
+import Snackbar from '@common/components/Snackbar';
 import ConnectWallet from './ConnectWallet';
 import DownloadWallet from './DownloadWallet';
-import Wave from '@components/WaveView/Wave';
-import useSnackbar from '@lib/hooks/use-snackbar';
-import Snackbar from '@components/Snackbar';
+import Wave from './Wave';
 
 type Props = {};
 

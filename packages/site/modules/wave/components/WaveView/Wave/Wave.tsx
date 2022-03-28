@@ -1,15 +1,14 @@
 import { FC } from 'react';
 import LastTransaction from './LastTransaction';
-import useContract from '@lib/hooks/use-contract';
-import WaveCount from '@components/WaveView/Wave/WaveCount';
-import Loading from '@components/Loading';
-import Form from '@components/WaveView/Wave/WaveForm';
-import ConnectedWallet from '@components/WaveView/Wave/ConnectedWallet';
-import WaveList from '@components/WaveView/Wave/WaveList';
-import useSnackbar from '@lib/hooks/use-snackbar';
-import { Prize } from '@lib/types';
-import Alert from '@components/Alert';
-import LastAwardedPrize from '@components/WaveView/Wave/LastAwardedPrize';
+import useContract from '@modules/wave/lib/hooks/use-contract';
+import WaveCount from './WaveCount';
+import Loading from '@common/components/Loading';
+import Form from './WaveForm';
+import ConnectedWallet from './ConnectedWallet';
+import WaveList from './WaveList';
+import useSnackbar from '@common/lib/hooks/use-snackbar';
+import { Prize } from '@modules/wave/lib/types';
+import LastAwardedPrize from './LastAwardedPrize';
 
 type Props = {
   wallet: string;

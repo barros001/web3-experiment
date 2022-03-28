@@ -1,7 +1,7 @@
 import { FC } from 'react';
-import { Wave } from '@lib/types';
-import Alert from '@components/Alert';
-import Spinner from '@components/Spinner';
+import { Wave } from '@modules/wave/lib/types';
+import Alert from '@common/components/Alert';
+import Spinner from '@common/components/Spinner';
 
 type Props = {
   waves: Wave[];

@@ -1,5 +1,6 @@
 import { FC } from 'react';
 import Image from 'next/image';
+import githubLogo from './github.png';
 
 const Layout: FC = ({ children }) => {
   return (
@@ -10,16 +11,10 @@ const Layout: FC = ({ children }) => {
           target="_blank"
           rel="noreferrer"
         >
-          <Image src="/github.png" width={35} height={35} />
+          <Image src={githubLogo} width={35} height={35} />
         </a>
       </div>
-      <div className="container pt-10 px-4">
-        <h1 className="text-center text-4xl mb-4">👋 Hey there!</h1>
-        <p className="text-center mb-10">
-          Connect your Ethereum wallet and wave at me!
-        </p>
-        {children}
-      </div>
+      <div className="container pt-10 px-4">{children}</div>
     </>
   );
 };

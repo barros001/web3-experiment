@@ -1,8 +1,3 @@
-export type Transaction = {
-  hash: string;
-  status: 'pending' | 'mined' | 'failed';
-};
-
 export type Wave = {
   waver: string;
   message: string;

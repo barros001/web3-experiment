@@ -1,5 +1,5 @@
 import { ReactElement, useContext } from 'react';
-import Context from '@lib/context';
+import Context from '@common/lib/context';
 
 const useSnackbar = () => {
   const { snackbarItems: items, setSnackbarItems: setItems } =

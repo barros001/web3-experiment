@@ -1,6 +1,6 @@
 import { FC } from 'react';
-import { Transaction } from '@lib/types';
-import Alert from '@components/Alert';
+import { Transaction } from '@common/lib/types';
+import Alert from '@common/components/Alert';
 
 type Props = {
   transaction: Transaction;

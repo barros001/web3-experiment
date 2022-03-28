@@ -1,6 +1,6 @@
 import { BigNumberish, ethers } from 'ethers';
 import contractABI from './WavePortal.json';
-import { getProvider } from '@lib/meta-mask';
+import { getProvider } from '@common/lib/meta-mask';
 
 const getContract = () => {
   const provider = new ethers.providers.Web3Provider(getProvider() as any);

@@ -1,10 +1,10 @@
 import '../styles/globals.css';
-import '../lib/font-awesome';
+import '@common/lib/font-awesome';
 import type { AppProps } from 'next/app';
 import Head from 'next/head';
 import React, { FC, useEffect } from 'react';
 import { DefaultSeo } from 'next-seo';
-import { ContextProvider } from '@lib/context';
+import { ContextProvider } from '@common/lib/context';
 
 const Noop: FC = ({ children }) => <>{children}</>;
 

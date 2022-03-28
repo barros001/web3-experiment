@@ -1,7 +1,7 @@
 import { FC, useState } from 'react';
-import Spinner from '@components/Spinner';
-import Alert from '@components/Alert';
-import useSnackbar from '@lib/hooks/use-snackbar';
+import Spinner from '@common/components/Spinner';
+import Alert from '@common/components/Alert';
+import useSnackbar from '@common/lib/hooks/use-snackbar';
 
 type Props = {
   wave: (message: string) => Promise<boolean>;

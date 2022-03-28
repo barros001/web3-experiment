@@ -1,6 +1,6 @@
 import { FC } from 'react';
-import { Prize } from '@lib/types';
-import Alert from '@components/Alert';
+import { Prize } from '@modules/wave/lib/types';
+import Alert from '@common/components/Alert';
 
 type Props = {
   prize: Prize;

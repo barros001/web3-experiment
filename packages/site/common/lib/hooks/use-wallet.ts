@@ -5,7 +5,7 @@ import {
   getConnectedWallet,
   isMetaMaskInstalled,
   onAccountsChanged,
-} from '@lib/meta-mask';
+} from '@common/lib/meta-mask';
 
 const useWallet = () => {
   const [isLoading, setIsLoading] = useState<boolean>(true);

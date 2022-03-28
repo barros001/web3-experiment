@@ -1,6 +1,6 @@
 import { FC } from 'react';
-import Alert from '@components/Alert';
-import useSnackbar from '@lib/hooks/use-snackbar';
+import Alert from '@common/components/Alert';
+import useSnackbar from '@common/lib/hooks/use-snackbar';
 
 type Props = {
   connect: () => Promise<void>;

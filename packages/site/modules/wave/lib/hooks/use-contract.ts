@@ -1,7 +1,8 @@
-import { getContract } from '@lib/contract';
+import { getContract } from '@modules/wave/lib/contract';
 import { useEffect, useState } from 'react';
-import { Prize, Transaction, Wave } from '@lib/types';
-import { formatEther } from '@lib/contract/contract';
+import { Prize, Wave } from '@modules/wave/lib/types';
+import { Transaction } from '@common/lib/types';
+import { formatEther } from '@modules/wave/lib/contract/contract';
 import { BigNumberish } from 'ethers';
 
 const useContract = (
