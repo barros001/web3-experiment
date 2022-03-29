@@ -17,6 +17,7 @@
     "dotenv": "^16.0.0",
     "ethereum-waffle": "^3.4.4",
     "ethers": "^5.6.1",
-    "hardhat": "^2.9.2"
+    "hardhat": "^2.9.2",
+    "@nomiclabs/hardhat-etherscan": "^3.0.3"
   }
 }
