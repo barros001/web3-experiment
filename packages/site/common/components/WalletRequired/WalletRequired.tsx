@@ -7,7 +7,7 @@ import InvalidChain from '@common/components/WalletRequired/InvalidChain';
 
 type Props = {
   children: (wallet: string) => React.ReactNode;
-  simple: boolean;
+  simple?: boolean;
 };
 
 const WalletRequired: FC<Props> = ({ simple = false, children }) => {
