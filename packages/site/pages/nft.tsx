@@ -1,5 +1,5 @@
-import Layout from '@common/components/Layout';
-import { NextSeo } from 'next-seo';
+import Layout from '@modules/nft/components/Layout';
+import NftView from '@modules/nft/components/NftView';
 
 export async function getStaticProps() {
   return {
@@ -12,14 +12,7 @@ export async function getStaticProps() {
 }
 
 export default function NFT() {
-  return (
-    <>
-      <NextSeo title="NFT" />
-      <h1 className="text-center text-4xl mb-4">
-        ⏳ Awesome NFTs coming soon!
-      </h1>
-    </>
-  );
+  return <NftView />;
 }
 
 NFT.Layout = Layout;

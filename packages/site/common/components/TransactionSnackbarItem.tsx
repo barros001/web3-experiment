@@ -5,7 +5,8 @@ import Alert from '@common/components/Alert';
 type Props = {
   transaction: Transaction;
 };
-const LastTransaction: FC<Props> = ({ transaction }) => {
+
+const TransactionSnackbarItem: FC<Props> = ({ transaction }) => {
   const link = () => {
     return (
       <div className="mt-2 text-center">
@@ -54,4 +55,4 @@ const LastTransaction: FC<Props> = ({ transaction }) => {
   );
 };
 
-export default LastTransaction;
+export default TransactionSnackbarItem;

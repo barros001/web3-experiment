@@ -2,8 +2,8 @@ import { getContract } from '@modules/wave/lib/contract';
 import { useEffect, useState } from 'react';
 import { Prize, Wave } from '@modules/wave/lib/types';
 import { Transaction } from '@common/lib/types';
-import { formatEther } from '@modules/wave/lib/contract/contract';
 import { BigNumberish } from 'ethers';
+import formatEther from '@common/lib/helpers/format-ether';
 
 const useContract = (
   wallet: string,

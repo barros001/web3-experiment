@@ -1,26 +1,25 @@
 import { FC } from 'react';
-import LastTransaction from './LastTransaction';
 import useContract from '@modules/wave/lib/hooks/use-contract';
 import WaveCount from './WaveCount';
-import Loading from '@common/components/Loading';
 import Form from './WaveForm';
-import ConnectedWallet from './ConnectedWallet';
+import ConnectedWallet from '@common/components/ConnectedWallet';
 import WaveList from './WaveList';
 import useSnackbar from '@common/lib/hooks/use-snackbar';
 import { Prize } from '@modules/wave/lib/types';
 import LastAwardedPrize from './LastAwardedPrize';
+import useTransactionListener from '@common/lib/hooks/use-transaction-listener';
+import Loading from '@common/components/Loading';
 
 type Props = {
   wallet: string;
 };
 
 const Wave: FC<Props> = ({ wallet }) => {
+  const { listener: transactionListener } = useTransactionListener();
   const { addItem } = useSnackbar();
-  const { isLoading, isWorking, wave, waves } = useContract(
+  const { isWorking, wave, waves, isLoading } = useContract(
     wallet,
-    (transaction) => {
-      addItem(<LastTransaction transaction={transaction} />);
-    },
+    transactionListener,
     (prize: Prize) => {
       addItem(<LastAwardedPrize prize={prize} />);
     }
