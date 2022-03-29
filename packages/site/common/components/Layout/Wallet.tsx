@@ -4,7 +4,7 @@ import WalletRequired from '@common/components/WalletRequired';
 
 const Wallet: FC = ({ children }) => {
   return (
-    <WalletRequired>
+    <WalletRequired simple>
       {(wallet) => {
         return (
           <>

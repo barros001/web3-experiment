@@ -11,8 +11,8 @@ export async function getStaticProps() {
   };
 }
 
-export default function Home() {
+export default function Wave() {
   return <WaveView />;
 }
 
-Home.Layout = Layout;
+Wave.Layout = Layout;

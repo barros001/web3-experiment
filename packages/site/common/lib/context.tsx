@@ -10,6 +10,8 @@ import {
   clearEventListeners,
   getConnectedWallet,
   onAccountsChanged,
+  getConnectedChainId,
+  onChainChanged,
 } from '@common/lib/meta-mask';
 
 type Context = {
@@ -19,6 +21,7 @@ type Context = {
   setIsWalletLoading: Dispatch<SetStateAction<boolean>>;
   wallet?: string;
   setWallet: Dispatch<SetStateAction<string | undefined>>;
+  chainId?: string;
 };
 
 const Context = React.createContext<Context>({
@@ -33,12 +36,15 @@ const ContextProvider: FC = ({ children }) => {
   const [snackbarItems, setSnackbarItems] = useState<ReactElement[]>([]);
   const [isWalletLoading, setIsWalletLoading] = useState<boolean>(true);
   const [wallet, setWallet] = useState<string | undefined>();
+  const [chainId, setChainId] = useState<string | undefined>();
 
   useEffect(() => {
     const initialize = async () => {
       try {
         setWallet(await getConnectedWallet());
+        setChainId(await getConnectedChainId());
         onAccountsChanged(setWallet);
+        onChainChanged(setChainId);
         setIsWalletLoading(false);
       } catch (e) {
         console.log(e);
@@ -61,6 +67,7 @@ const ContextProvider: FC = ({ children }) => {
         setIsWalletLoading,
         wallet,
         setWallet,
+        chainId,
       }}
     >
       {children}

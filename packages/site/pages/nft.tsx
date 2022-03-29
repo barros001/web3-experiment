@@ -11,8 +11,8 @@ export async function getStaticProps() {
   };
 }
 
-export default function NFT() {
+export default function Nft() {
   return <NftView />;
 }
 
-NFT.Layout = Layout;
+Nft.Layout = Layout;

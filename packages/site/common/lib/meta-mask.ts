@@ -64,8 +64,33 @@ const onAccountsChanged = (
   });
 };
 
+const onChainChanged = (
+  callback: (chainId: string | undefined) => void
+): void => {
+  if (!isMetaMaskInstalled()) {
+    return;
+  }
+
+  window.ethereum.on('chainChanged', (args) => {
+    const chainId = args as string;
+    callback(chainId ?? undefined);
+  });
+};
+
 const clearEventListeners = () => {
   window.ethereum.removeAllListeners();
+};
+
+const getConnectedChainId = async (): Promise<string | undefined> => {
+  if (!isMetaMaskInstalled()) {
+    return undefined;
+  }
+
+  const chainId = await window.ethereum.request<string>({
+    method: 'eth_chainId',
+  });
+
+  return chainId ?? undefined;
 };
 
 export {
@@ -75,4 +100,6 @@ export {
   onAccountsChanged,
   getProvider,
   clearEventListeners,
+  getConnectedChainId,
+  onChainChanged,
 };

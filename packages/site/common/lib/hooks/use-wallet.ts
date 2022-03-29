@@ -3,7 +3,12 @@ import { connectWallet, isMetaMaskInstalled } from '@common/lib/meta-mask';
 import Context from '@common/lib/context';
 
 const useWallet = () => {
-  const { wallet, setWallet, isWalletLoading: isLoading } = useContext(Context);
+  const {
+    wallet,
+    setWallet,
+    isWalletLoading: isLoading,
+    chainId,
+  } = useContext(Context);
 
   const connect = async () => {
     setWallet(await connectWallet());
@@ -14,6 +19,7 @@ const useWallet = () => {
     isWalletInstalled: isMetaMaskInstalled(),
     wallet,
     connect,
+    chainId,
   };
 };
 

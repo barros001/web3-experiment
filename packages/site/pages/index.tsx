@@ -1,6 +1,6 @@
 import Layout from '@common/components/Layout';
 
-export default function NFT() {
+export default function Home() {
   return (
     <>
       <h1 className="text-center text-4xl mb-4">
@@ -10,4 +10,4 @@ export default function NFT() {
   );
 }
 
-NFT.Layout = Layout;
+Home.Layout = Layout;

@@ -23,7 +23,7 @@ contract MyEpicNFT is ERC721URIStorage {
     ["Disaster", "Alcohol", "Artisan", "Hall", "World", "Hotel", "User", "Permission", "Recipe", "Potato", "Guitar", "Agreement", "Industry", "Nation", "Attention", "Revenue", "Fishing", "Homework", "Reputation", "Response", "Youth", "Attitude", "Cigarette", "College", "Tongue", "Music", "Bedroom", "Breath", "Method", "Significance"]
     ];
 
-    event NewEpicNFTMinted(address sender, uint256 tokenId);
+    event NewEpicNFTMinted(address sender, uint256 tokenId, string name, uint256 timestamp);
 
     constructor() ERC721 ("BravoNFT", "BRAVO") {
         console.log("This is my NFT contract. Whoa!");
@@ -78,7 +78,7 @@ contract MyEpicNFT is ERC721URIStorage {
         _setTokenURI(newItemId, finalTokenUri);
         _tokenIds.increment();
 
-        emit NewEpicNFTMinted(msg.sender, newItemId);
+        emit NewEpicNFTMinted(msg.sender, newItemId, combinedWord, block.timestamp);
 
         console.log("An NFT w/ ID %s has been minted to %s", newItemId, msg.sender);
     }

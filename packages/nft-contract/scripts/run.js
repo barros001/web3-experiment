@@ -6,15 +6,35 @@ const main = async () => {
   await nftContract.deployed();
   console.log("Contract deployed to:", nftContract.address);
   console.log("Max supply:", (await nftContract.MAX_TOKENS()).toString());
-  console.log("Total NFTs Minted:", (await nftContract.totalSupply()).toString());
+  console.log(
+    "Total NFTs Minted:",
+    (await nftContract.totalSupply()).toString()
+  );
+
+  let events = [];
 
   let txn = await nftContract.makeAnEpicNFT();
-  await txn.wait();
-  console.log("Total NFTs Minted:", (await nftContract.totalSupply()).toString());
+  events = events.concat((await txn.wait()).events);
+  console.log(
+    "Total NFTs Minted:",
+    (await nftContract.totalSupply()).toString()
+  );
 
   txn = await nftContract.makeAnEpicNFT();
-  await txn.wait();
-  console.log("Total NFTs Minted:", (await nftContract.totalSupply()).toString());
+  events = events.concat((await txn.wait()).events);
+  console.log(
+    "Total NFTs Minted:",
+    (await nftContract.totalSupply()).toString()
+  );
+
+  events.forEach((event) => {
+    if (event.event === "NewEpicNFTMinted") {
+      const [from, tokenId, name, timestamp] = event.args;
+      console.log(
+        `NewEpicNFTMinted from ${from} with token ID ${tokenId} and name "${name}" @ ${timestamp}`
+      );
+    }
+  });
 };
 
 main()
