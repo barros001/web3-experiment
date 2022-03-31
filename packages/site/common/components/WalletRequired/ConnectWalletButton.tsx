@@ -1,15 +1,16 @@
 import { FC } from 'react';
 import Alert from '@common/components/Alert';
-import useSnackbar from '@common/lib/hooks/use-snackbar';
+import { useSnackbar } from '@common/components/Snackbar';
 import clsx from 'clsx';
-import useWallet from '@common/lib/hooks/use-wallet';
+import { useWallet } from '@common/lib/wallet/context';
+import MetaMask from '@common/lib/wallet/providers/meta-mask';
 
 type Props = {
   className?: string;
 };
 
 const ConnectWalletButton: FC<Props> = ({ className }) => {
-  const { connect } = useWallet();
+  const { connect } = useWallet(MetaMask);
   const { addItem } = useSnackbar();
 
   const doConnect = async () => {

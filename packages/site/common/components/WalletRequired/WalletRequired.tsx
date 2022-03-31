@@ -1,9 +1,10 @@
 import React, { FC } from 'react';
-import useWallet from '@common/lib/hooks/use-wallet';
+import { useWallet } from '@common/lib/wallet/context';
 import Spinner from '@common/components/Spinner';
 import ConnectWalletButton from './ConnectWalletButton';
 import DownloadWalletButton from '@common/components/WalletRequired/DownloadWallet';
 import InvalidChain from '@common/components/WalletRequired/InvalidChain';
+import MetaMask from '@common/lib/wallet/providers/meta-mask';
 
 type Props = {
   children: (wallet: string) => React.ReactNode;
@@ -11,7 +12,7 @@ type Props = {
 };
 
 const WalletRequired: FC<Props> = ({ simple = false, children }) => {
-  const { isLoading, wallet, isWalletInstalled, chainId } = useWallet();
+  const { isLoading, wallet, isInstalled } = useWallet(MetaMask);
 
   if (isLoading) {
     return (
@@ -21,7 +22,7 @@ const WalletRequired: FC<Props> = ({ simple = false, children }) => {
     );
   }
 
-  if (!isWalletInstalled) {
+  if (!isInstalled) {
     return (
       <div className="text-center">
         <DownloadWalletButton />
@@ -38,7 +39,7 @@ const WalletRequired: FC<Props> = ({ simple = false, children }) => {
   }
 
   /* Rinkeby */
-  if (chainId !== '0x4') {
+  if (wallet.chainId !== '0x4') {
     if (simple) {
       return null;
     }
@@ -46,7 +47,7 @@ const WalletRequired: FC<Props> = ({ simple = false, children }) => {
     return <InvalidChain />;
   }
 
-  return <>{children(wallet)}</>;
+  return <>{children(wallet.publicKey)}</>;
 };
 
 export default WalletRequired;

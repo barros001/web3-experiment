@@ -4,7 +4,7 @@ import WaveCount from './WaveCount';
 import Form from './WaveForm';
 import ConnectedWallet from '@common/components/ConnectedWallet';
 import WaveList from './WaveList';
-import useSnackbar from '@common/lib/hooks/use-snackbar';
+import { useSnackbar } from '@common/components/Snackbar';
 import { Prize } from '@modules/wave/lib/types';
 import LastAwardedPrize from './LastAwardedPrize';
 import useTransactionListener from '@common/lib/hooks/use-transaction-listener';

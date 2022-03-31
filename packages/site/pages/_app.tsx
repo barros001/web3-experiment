@@ -4,7 +4,8 @@ import type { AppProps } from 'next/app';
 import Head from 'next/head';
 import React, { FC, useEffect } from 'react';
 import { DefaultSeo } from 'next-seo';
-import { ContextProvider } from '@common/lib/context';
+import { WalletContextProvider as MetaMaskContextProvider } from '@common/lib/wallet/providers/meta-mask';
+import { SnackbarContextProvider } from '@common/components/Snackbar';
 
 const Noop: FC = ({ children }) => <>{children}</>;
 
@@ -20,12 +21,17 @@ function MyApp({ Component, pageProps }: AppProps) {
       <Head>
         <meta content="width=device-width,initial-scale=1" name="viewport" />
       </Head>
-      <ContextProvider>
-        <Layout {...pageProps?.layoutProps}>
-          <DefaultSeo title="Welcome" titleTemplate="%s | My web3 experiment" />
-          <Component {...pageProps} />
-        </Layout>
-      </ContextProvider>
+      <SnackbarContextProvider>
+        <MetaMaskContextProvider>
+          <Layout {...pageProps?.layoutProps}>
+            <DefaultSeo
+              title="Welcome"
+              titleTemplate="%s | My web3 experiment"
+            />
+            <Component {...pageProps} />
+          </Layout>
+        </MetaMaskContextProvider>
+      </SnackbarContextProvider>
     </>
   );
 }

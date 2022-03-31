@@ -4,7 +4,7 @@ import ConnectedWallet from '@common/components/ConnectedWallet';
 import useTransactionListener from '@common/lib/hooks/use-transaction-listener';
 import Spinner from '@common/components/Spinner';
 import Alert from '@common/components/Alert';
-import useSnackbar from '@common/lib/hooks/use-snackbar';
+import { useSnackbar } from '@common/components/Snackbar';
 import NftCount from '@modules/nft/components/NftView/Nft/NftCount';
 import Loading from '@common/components/Loading';
 import Balance from '@modules/nft/components/NftView/Nft/Balance';

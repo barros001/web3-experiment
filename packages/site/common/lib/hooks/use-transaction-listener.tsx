@@ -1,4 +1,4 @@
-import useSnackbar from '@common/lib/hooks/use-snackbar';
+import { useSnackbar } from '@common/components/Snackbar';
 import { Transaction } from '@common/lib/types';
 import TransactionSnackbarItem from '@common/components/TransactionSnackbarItem';
 

@@ -3,7 +3,7 @@ import Wallet from './Wallet';
 import Link from 'next/link';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Snackbar from '@common/components/Snackbar';
-import useSnackbar from '@common/lib/hooks/use-snackbar';
+import { useSnackbar } from '@common/components/Snackbar';
 
 type Props = {
   selectedMenuItem?: string;
