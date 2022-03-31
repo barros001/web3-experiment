@@ -5,6 +5,7 @@ import Head from 'next/head';
 import React, { FC, useEffect } from 'react';
 import { DefaultSeo } from 'next-seo';
 import { WalletContextProvider as MetaMaskContextProvider } from '@common/lib/wallet/providers/meta-mask';
+import { WalletContextProvider as PhantomMaskContextProvider } from '@common/lib/wallet/providers/phantom';
 import { SnackbarContextProvider } from '@common/components/Snackbar';
 
 const Noop: FC = ({ children }) => <>{children}</>;
@@ -23,13 +24,15 @@ function MyApp({ Component, pageProps }: AppProps) {
       </Head>
       <SnackbarContextProvider>
         <MetaMaskContextProvider>
-          <Layout {...pageProps?.layoutProps}>
-            <DefaultSeo
-              title="Welcome"
-              titleTemplate="%s | My web3 experiment"
-            />
-            <Component {...pageProps} />
-          </Layout>
+          <PhantomMaskContextProvider>
+            <Layout {...pageProps?.layoutProps}>
+              <DefaultSeo
+                title="Welcome"
+                titleTemplate="%s | My web3 experiment"
+              />
+              <Component {...pageProps} />
+            </Layout>
+          </PhantomMaskContextProvider>
         </MetaMaskContextProvider>
       </SnackbarContextProvider>
     </>

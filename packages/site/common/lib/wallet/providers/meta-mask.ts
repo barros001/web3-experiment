@@ -25,6 +25,8 @@ const isInstalled = (): boolean => {
 };
 
 const getProvider = (): MetaMaskInpageProvider => {
+  assertIsInstalled();
+
   return window.ethereum;
 };
 

@@ -8,7 +8,7 @@ import { WalletProvider } from '@common/lib/wallet/types';
 
 type Props = {
   walletProvider: WalletProvider;
-  chainId: string;
+  chainId?: string;
   children: (wallet: string) => React.ReactNode;
 };
 
@@ -41,7 +41,7 @@ const WalletRequired: FC<Props> = ({ walletProvider, chainId, children }) => {
     );
   }
 
-  if (wallet.chainId !== chainId) {
+  if (chainId && wallet.chainId !== chainId) {
     return <InvalidChain wallet={wallet} walletProvider={walletProvider} />;
   }
 

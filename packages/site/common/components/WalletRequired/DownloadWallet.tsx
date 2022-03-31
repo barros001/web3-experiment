@@ -11,7 +11,11 @@ const DownloadWalletButton: FC<Props> = ({ vendorDetails }) => {
       href={vendorDetails.url}
       target="_blank"
       rel="noreferrer"
-      className={`border-[${vendorDetails.color}] rounded text-white bg-[${vendorDetails.color}] px-3 py-2`}
+      className={`border rounded text-white px-3 py-2`}
+      style={{
+        borderColor: vendorDetails.color,
+        backgroundColor: vendorDetails.color,
+      }}
     >
       Download {vendorDetails.name}
     </a>
