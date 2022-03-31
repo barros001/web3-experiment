@@ -6,7 +6,14 @@ export type Wallet = {
   chainId?: string;
 };
 
+export type VendorDetails = {
+  name: string;
+  url: string;
+  color: string;
+};
+
 export interface WalletProvider {
+  getVendorDetails: () => VendorDetails;
   isInstalled: () => boolean;
   getProvider: () => any;
   getContext: () => Context<WalletContext>;
@@ -14,4 +21,5 @@ export interface WalletProvider {
   connect: () => Promise<Wallet>;
   onWalletChanged: (listener: (wallet: Wallet | undefined) => void) => void;
   cleanup: () => void;
+  getChainName: (chainId: string) => string;
 }

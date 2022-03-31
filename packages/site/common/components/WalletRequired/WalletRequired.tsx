@@ -4,15 +4,16 @@ import Spinner from '@common/components/Spinner';
 import ConnectWalletButton from './ConnectWalletButton';
 import DownloadWalletButton from '@common/components/WalletRequired/DownloadWallet';
 import InvalidChain from '@common/components/WalletRequired/InvalidChain';
-import MetaMask from '@common/lib/wallet/providers/meta-mask';
+import { WalletProvider } from '@common/lib/wallet/types';
 
 type Props = {
+  walletProvider: WalletProvider;
+  chainId: string;
   children: (wallet: string) => React.ReactNode;
-  simple?: boolean;
 };
 
-const WalletRequired: FC<Props> = ({ simple = false, children }) => {
-  const { isLoading, wallet, isInstalled } = useWallet(MetaMask);
+const WalletRequired: FC<Props> = ({ walletProvider, chainId, children }) => {
+  const { isLoading, wallet, isInstalled, connect } = useWallet(walletProvider);
 
   if (isLoading) {
     return (
@@ -25,7 +26,9 @@ const WalletRequired: FC<Props> = ({ simple = false, children }) => {
   if (!isInstalled) {
     return (
       <div className="text-center">
-        <DownloadWalletButton />
+        <DownloadWalletButton
+          vendorDetails={walletProvider.getVendorDetails()}
+        />
       </div>
     );
   }
@@ -33,18 +36,13 @@ const WalletRequired: FC<Props> = ({ simple = false, children }) => {
   if (!wallet) {
     return (
       <div className="text-center">
-        <ConnectWalletButton />
+        <ConnectWalletButton connect={connect} />
       </div>
     );
   }
 
-  /* Rinkeby */
-  if (wallet.chainId !== '0x4') {
-    if (simple) {
-      return null;
-    }
-
-    return <InvalidChain />;
+  if (wallet.chainId !== chainId) {
+    return <InvalidChain wallet={wallet} walletProvider={walletProvider} />;
   }
 
   return <>{children(wallet.publicKey)}</>;

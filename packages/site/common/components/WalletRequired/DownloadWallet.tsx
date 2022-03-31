@@ -1,14 +1,19 @@
 import { FC } from 'react';
+import { VendorDetails } from '@common/lib/wallet/types';
 
-const DownloadWalletButton: FC = () => {
+type Props = {
+  vendorDetails: VendorDetails;
+};
+
+const DownloadWalletButton: FC<Props> = ({ vendorDetails }) => {
   return (
     <a
-      href="https://metamask.io/"
+      href={vendorDetails.url}
       target="_blank"
       rel="noreferrer"
-      className="border-orange-500 rounded text-white bg-orange-500 px-3 py-2"
+      className={`border-[${vendorDetails.color}] rounded text-white bg-[${vendorDetails.color}] px-3 py-2`}
     >
-      Download MetaMask
+      Download {vendorDetails.name}
     </a>
   );
 };

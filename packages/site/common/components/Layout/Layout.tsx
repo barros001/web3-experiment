@@ -1,5 +1,4 @@
 import { FC } from 'react';
-import Wallet from './Wallet';
 import Link from 'next/link';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Snackbar from '@common/components/Snackbar';
@@ -48,9 +47,7 @@ const Layout: FC<Props> = ({ selectedMenuItem, children }) => {
               <FontAwesomeIcon icon={['fab', 'github']} />
             </a>
           </div>
-          <div className="hidden sm:block ml-auto">
-            <Wallet />
-          </div>
+          <div className="hidden sm:block ml-auto" />
         </div>
       </div>
       <div className="container pt-10 px-4">{children}</div>

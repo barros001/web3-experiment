@@ -26,8 +26,13 @@ const buildWalletContext = (walletProvider: WalletProvider) => {
     useEffect(() => {
       const initialize = async () => {
         try {
-          setWallet(await walletProvider.getConnectedWallet());
-          walletProvider.onWalletChanged(setWallet);
+          setIsLoading(true);
+
+          if (walletProvider.isInstalled()) {
+            setWallet(await walletProvider.getConnectedWallet());
+            walletProvider.onWalletChanged(setWallet);
+          }
+
           setIsLoading(false);
         } catch (e) {
           console.log(e);
@@ -39,7 +44,7 @@ const buildWalletContext = (walletProvider: WalletProvider) => {
       return () => {
         walletProvider.cleanup();
       };
-    }, []);
+    }, [walletProvider.isInstalled()]);
 
     return (
       <Context.Provider

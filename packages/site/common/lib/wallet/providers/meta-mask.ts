@@ -8,6 +8,14 @@ declare global {
   }
 }
 
+export const CHAIN_ETHEREUM_MAIN_NETWORK = '0x1';
+export const CHAIN_RINKEBY_TEST_NETWORK = '0x4';
+
+const chainNames = {
+  [CHAIN_ETHEREUM_MAIN_NETWORK]: 'Ethereum Main Network',
+  [CHAIN_RINKEBY_TEST_NETWORK]: 'Rinkeby Test Network',
+};
+
 const isInstalled = (): boolean => {
   if (typeof window === 'undefined') {
     return false;
@@ -17,8 +25,6 @@ const isInstalled = (): boolean => {
 };
 
 const getProvider = (): MetaMaskInpageProvider => {
-  assertIsInstalled();
-
   return window.ethereum;
 };
 
@@ -96,6 +102,22 @@ const getContext = () => {
   return Context;
 };
 
+const getVendorDetails = () => {
+  return {
+    name: 'MetaMask',
+    url: 'https://metamask.io',
+    color: '#E7893C',
+  };
+};
+
+const getChainName = (chainId: string) => {
+  if (chainNames.hasOwnProperty(chainId)) {
+    return (chainNames as any)[chainId];
+  }
+
+  return 'Unknown Network';
+};
+
 const MetaMask: WalletProvider = {
   isInstalled,
   getProvider,
@@ -104,6 +126,8 @@ const MetaMask: WalletProvider = {
   onWalletChanged,
   cleanup,
   getContext,
+  getVendorDetails,
+  getChainName,
 };
 
 const { Context, WalletContextProvider } = buildWalletContext(MetaMask);

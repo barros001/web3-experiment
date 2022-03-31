@@ -1,11 +1,19 @@
 import { FC } from 'react';
 import Alert from '@common/components/Alert';
+import { WalletProvider, Wallet } from '@common/lib/wallet/types';
 
-const InvalidChain: FC = () => {
+type Props = {
+  wallet: Wallet;
+  walletProvider: WalletProvider;
+};
+const InvalidChain: FC<Props> = ({ wallet, walletProvider }) => {
+  const chainName = walletProvider.getChainName(wallet.chainId || '');
+
   return (
     <Alert type="danger">
-      You are not connected to the Rinkeby Test Network. Please go to MetaMask
-      and connect to the correct network.
+      You are not connected to the ${chainName}. Please go to $
+      {walletProvider.getVendorDetails().name} and connect to the correct
+      network.
     </Alert>
   );
 };
