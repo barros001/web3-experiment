@@ -37,6 +37,15 @@ const Layout: FC<Props> = ({ selectedMenuItem, children }) => {
                 Mint an NFT
               </a>
             </Link>
+            <Link href="/game">
+              <a
+                className={`mr-5 text-base font-medium text-gray-500 hover:text-gray-900 ${
+                  selectedMenuItem === 'game' ? 'text-gray-900' : null
+                }`}
+              >
+                NFT Game
+              </a>
+            </Link>
             <a
               href="https://github.com/barros001/wave-portal"
               target="_blank"

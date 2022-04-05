@@ -16,5 +16,5 @@ npx hardhat help
 
 NFT contract Address:
 ```
-0xDA0c71AeC86bc9C3bB0bc1bFd048dA2C873a85f2
+0x589241B919819B30FD5aA3ccF661272F32C41d58
 ```
