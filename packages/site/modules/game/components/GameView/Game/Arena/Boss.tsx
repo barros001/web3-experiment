@@ -9,9 +9,9 @@ type Props = {
 const Boss: FC<Props> = ({ boss }) => {
   return (
     <div>
-      <div className="border rounded inline-block p-5 bg-red-500">
+      <div className="border rounded inline-block p-5 bg-red-500 w-full">
         <p className="text-white text-2xl mb-4">🔥 {boss.name} 🔥</p>
-        <div className="border rounded">
+        <div className="border rounded bg-white">
           <img
             src={ipfsUrl(boss.imageUri)}
             alt={boss.name}

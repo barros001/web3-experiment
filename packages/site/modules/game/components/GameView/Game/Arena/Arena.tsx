@@ -37,7 +37,7 @@ const Arena: FC<Props> = ({
 
   return (
     <>
-      <div className="text-center mb-4">
+      <div className="text-center mb-4 sm:w-[300px] m-auto">
         <Boss boss={boss} />
       </div>
       <div className="text-center mb-6">
@@ -63,7 +63,7 @@ const Arena: FC<Props> = ({
           </>
         )}
       </div>
-      <div className="text-center mb-8">
+      <div className="text-center mb-8 sm:w-[300px] m-auto">
         <Character character={character} key={character.index} />
       </div>
       <OnlinePlayers allPlayers={allPlayers} />

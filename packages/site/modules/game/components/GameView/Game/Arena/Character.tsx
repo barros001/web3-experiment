@@ -10,7 +10,7 @@ type Props = {
 const Character: FC<Props> = ({ character }) => {
   return (
     <div>
-      <div className="border rounded inline-block p-5 bg-gray-400">
+      <div className="border rounded inline-block p-5 bg-gray-400 w-full">
         <p className="text-white text-2xl mb-4">{character.name}</p>
         <div className="border rounded mb-4 bg-white">
           <img
