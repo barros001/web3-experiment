@@ -23,6 +23,8 @@ const buildWalletContext = (walletProvider: WalletProvider) => {
       setWallet(await walletProvider.connect());
     };
 
+    const isWalletInstalled = walletProvider.isInstalled();
+
     useEffect(() => {
       const initialize = async () => {
         try {
@@ -44,7 +46,7 @@ const buildWalletContext = (walletProvider: WalletProvider) => {
       return () => {
         walletProvider.cleanup();
       };
-    }, [walletProvider.isInstalled()]);
+    }, [isWalletInstalled]);
 
     return (
       <Context.Provider
