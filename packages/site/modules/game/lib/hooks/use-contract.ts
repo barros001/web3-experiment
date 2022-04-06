@@ -72,15 +72,19 @@ const useContract = (
     return buildCharacter(txn.characterIndex, txn);
   };
 
-  const refreshCharacters = async () => {
+  const refreshCharacters = async (
+    refreshCurrentCharacter: boolean = false
+  ) => {
     const [boss, character, allPlayers] = await Promise.all([
       getBoss(),
-      getCurrentCharacter(),
+      refreshCurrentCharacter ? getCurrentCharacter() : undefined,
       getAllPlayers(),
     ]);
 
     setBoss(boss);
-    setCharacter(character);
+    if (refreshCurrentCharacter) {
+      setCharacter(character);
+    }
     setAllPlayers(allPlayers);
   };
 
@@ -102,7 +106,7 @@ const useContract = (
             status: 'mined',
           });
 
-          await refreshCharacters();
+          await refreshCharacters(true);
           setIsWorking(false);
         })
         .catch(async () => {
@@ -145,7 +149,7 @@ const useContract = (
             hash: txn.hash,
             status: 'mined',
           });
-          await refreshCharacters();
+          await refreshCharacters(true);
           setIsWorking(false);
           setIsMinting(undefined);
         })
@@ -169,7 +173,7 @@ const useContract = (
     const initialize = async () => {
       const [allCharacters] = await Promise.all([
         getAllCharacters(),
-        refreshCharacters(),
+        refreshCharacters(true),
       ]);
 
       setAllCharacters(allCharacters);
@@ -226,7 +230,7 @@ const useContract = (
     if (boss) {
       return initializeListeners();
     }
-  }, [boss]);
+  }, [boss?.name]);
 
   return {
     isLoading,
