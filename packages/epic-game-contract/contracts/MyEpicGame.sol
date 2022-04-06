@@ -21,6 +21,8 @@ contract MyEpicGame is ERC721 {
         uint hp;
         uint maxHp;
         uint attackDamage;
+        uint damageDealt;
+        address owner;
     }
 
     struct BigBoss {
@@ -45,11 +47,12 @@ contract MyEpicGame is ERC721 {
     // A mapping from an address => the NFTs tokenId. Gives me an ez way
     // to store the owner of the NFT and reference it later.
     mapping(address => uint256) public nftHolders;
+    address[] owners;
 
     BigBoss public bigBoss;
 
     event CharacterNFTMinted(address sender, uint256 tokenId, uint256 characterIndex);
-    event AttackComplete(uint newBossHp, uint newPlayerHp);
+    event AttackComplete(string character, uint bossDamage, uint newBossHp, uint playerDamage, uint newPlayerHp);
 
     constructor(
         string[] memory characterNames,
@@ -80,7 +83,9 @@ contract MyEpicGame is ERC721 {
             imageURI : characterImageURIs[i],
             hp : characterHp[i],
             maxHp : characterHp[i],
-            attackDamage : characterAttackDmg[i]
+            attackDamage : characterAttackDmg[i],
+            damageDealt : 0,
+            owner : msg.sender
             }));
 
             CharacterAttributes memory c = defaultCharacters[i];
@@ -111,12 +116,19 @@ contract MyEpicGame is ERC721 {
         imageURI : defaultCharacters[_characterIndex].imageURI,
         hp : defaultCharacters[_characterIndex].hp,
         maxHp : defaultCharacters[_characterIndex].maxHp,
-        attackDamage : defaultCharacters[_characterIndex].attackDamage
+        attackDamage : defaultCharacters[_characterIndex].attackDamage,
+        damageDealt : 0,
+        owner : msg.sender
         });
 
         console.log("Minted NFT w/ tokenId %s and characterIndex %s", newItemId, _characterIndex);
 
         // Keep an easy way to see who owns what NFT.
+        if (nftHolders[msg.sender] == 0x0) {
+            console.log("Pushing to lis of owners %s", msg.sender);
+            owners.push(msg.sender);
+        }
+
         nftHolders[msg.sender] = newItemId;
 
         // Increment the tokenId for the next person that uses it.
@@ -138,7 +150,7 @@ contract MyEpicGame is ERC721 {
                 charAttributes.name,
                 ' -- NFT #: ',
                 Strings.toString(_tokenId),
-                '", "description": "This is an NFT that lets people play in the game Metaverse Slayer!", "image": "',
+                '", "description": "This is an NFT that lets people play in the game Metaverse Slayer!", "image": "ipfs://',
                 charAttributes.imageURI,
                 '", "attributes": [ { "trait_type": "Health Points", "value": ', strHp, ', "max_value":', strMaxHp, '}, { "trait_type": "Attack Damage", "value": ',
                 strAttackDamage, '} ]}'
@@ -155,6 +167,9 @@ contract MyEpicGame is ERC721 {
     function attackBoss() public {
         // Get the state of the player's NFT.
         uint256 nftTokenIdOfPlayer = nftHolders[msg.sender];
+        uint256 bossDamage;
+        uint256 playerDamage;
+
         CharacterAttributes storage player = nftHolderAttributes[nftTokenIdOfPlayer];
         console.log("\nPlayer w/ character %s about to attack. Has %s HP and %s AD", player.name, player.hp, player.attackDamage);
         console.log("Boss %s has %s HP and %s AD", bigBoss.name, bigBoss.hp, bigBoss.attackDamage);
@@ -173,16 +188,22 @@ contract MyEpicGame is ERC721 {
 
         // Allow player to attack boss.
         if (bigBoss.hp < player.attackDamage) {
+            bossDamage = bigBoss.hp;
             bigBoss.hp = 0;
         } else {
+            bossDamage = player.attackDamage;
             bigBoss.hp = bigBoss.hp - player.attackDamage;
         }
+
+        player.damageDealt += bossDamage;
 
         // Allow boss to attack player, but only if not dead yet
         if (bigBoss.hp > 0) {
             if (player.hp < bigBoss.attackDamage) {
+                playerDamage = player.hp;
                 player.hp = 0;
             } else {
+                playerDamage = bigBoss.attackDamage;
                 player.hp = player.hp - bigBoss.attackDamage;
             }
         }
@@ -190,7 +211,7 @@ contract MyEpicGame is ERC721 {
         console.log("Player attacked boss. New boss hp: %s", bigBoss.hp);
         console.log("Boss attacked player. New player hp: %s\n", player.hp);
 
-        emit AttackComplete(bigBoss.hp, player.hp);
+        emit AttackComplete(player.name, bossDamage, bigBoss.hp, playerDamage, player.hp);
     }
 
     function checkIfUserHasNFT() public view returns (CharacterAttributes memory) {
@@ -215,5 +236,13 @@ contract MyEpicGame is ERC721 {
         return bigBoss;
     }
 
+    function getAllPlayers() public view returns (CharacterAttributes[] memory) {
+        CharacterAttributes[] memory players = new CharacterAttributes[](owners.length);
 
+        for (uint i = 0; i < owners.length; i += 1) {
+            players[i] = nftHolderAttributes[nftHolders[owners[i]]];
+        }
+
+        return players;
+    }
 }

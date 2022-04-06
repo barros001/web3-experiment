@@ -6,14 +6,20 @@ import { BigNumber } from 'ethers';
 
 const useContract = (
   wallet: string,
-  onTransaction: (transaction: Transaction) => void
+  onTransaction: (transaction: Transaction) => void,
+  onAttack: (name: string, damage: number, newHp: number) => void
 ) => {
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [allCharacters, setAllCharacters] = useState<Character[]>([]);
+  const [allPlayers, setAllPlayers] = useState<Character[]>([]);
   const [character, setCharacter] = useState<Character | undefined>(undefined);
   const [boss, setBoss] = useState<Character>();
   const [isWorking, setIsWorking] = useState<boolean>(false);
   const [isMinting, setIsMinting] = useState<number | undefined>();
+
+  const unsetCharacter = () => {
+    setCharacter(undefined);
+  };
 
   const buildCharacter = (index: number, txn: any): Character => {
     return {
@@ -23,6 +29,8 @@ const useContract = (
       hp: txn.hp.toNumber(),
       maxHp: txn.maxHp.toNumber(),
       attackDamage: txn.attackDamage.toNumber(),
+      damageDealt: txn.damageDealt?.toNumber(),
+      owner: txn.owner,
     };
   };
 
@@ -40,6 +48,20 @@ const useContract = (
     });
   };
 
+  const getAllPlayers = async (): Promise<Character[]> => {
+    const txn = await getContract().getAllPlayers();
+
+    return (txn as any[])
+      .map((data) => {
+        return buildCharacter(data.characterIndex, data);
+      })
+      .filter(
+        (character) =>
+          character.hp > 0 &&
+          character.owner.toUpperCase() !== wallet.toUpperCase()
+      );
+  };
+
   const getCurrentCharacter = async (): Promise<Character | undefined> => {
     const txn = await getContract().checkIfUserHasNFT();
 
@@ -48,6 +70,18 @@ const useContract = (
     }
 
     return buildCharacter(txn.characterIndex, txn);
+  };
+
+  const refreshCharacters = async () => {
+    const [boss, character, allPlayers] = await Promise.all([
+      getBoss(),
+      getCurrentCharacter(),
+      getAllPlayers(),
+    ]);
+
+    setBoss(boss);
+    setCharacter(character);
+    setAllPlayers(allPlayers);
   };
 
   const attack = async (): Promise<void> => {
@@ -67,6 +101,8 @@ const useContract = (
             hash: txn.hash,
             status: 'mined',
           });
+
+          await refreshCharacters();
           setIsWorking(false);
         })
         .catch(async () => {
@@ -109,7 +145,7 @@ const useContract = (
             hash: txn.hash,
             status: 'mined',
           });
-          setCharacter(characterToMint);
+          await refreshCharacters();
           setIsWorking(false);
           setIsMinting(undefined);
         })
@@ -131,47 +167,66 @@ const useContract = (
 
   useEffect(() => {
     const initialize = async () => {
+      const [allCharacters] = await Promise.all([
+        getAllCharacters(),
+        refreshCharacters(),
+      ]);
+
+      setAllCharacters(allCharacters);
+      setIsLoading(false);
+    };
+
+    const initializeListeners = () => {
       const characterMintedListener = async (
         owner: string,
         id: BigNumber,
         index: BigNumber
       ) => {
-        if (owner.toUpperCase() === wallet.toUpperCase()) {
-          setCharacter(await getCurrentCharacter());
-        }
-      };
-
-      const attackCompleteListener = async (
-        newBossHp: BigNumber,
-        newPlayerHp: BigNumber
-      ) => {
-        setBoss((boss) => {
-          return { ...boss!, hp: newBossHp.toNumber() };
-        });
-        setCharacter((character) => {
-          return { ...character!, hp: newPlayerHp.toNumber() };
-        });
+        await refreshCharacters();
       };
 
       getContract().on('CharacterNFTMinted', characterMintedListener);
-      getContract().on('AttackComplete', attackCompleteListener);
-
-      setCharacter(await getCurrentCharacter());
-
-      // TODO: these are only needed on their respective components
-      setAllCharacters(await getAllCharacters());
-      setBoss(await getBoss());
-
-      setIsLoading(false);
 
       return () => {
         getContract().off('CharacterNFTMinted', characterMintedListener);
-        getContract().off('AttackComplete', attackCompleteListener);
       };
     };
 
     initialize();
-  }, []);
+    return initializeListeners();
+  }, [wallet]);
+
+  useEffect(() => {
+    const initializeListeners = () => {
+      const attackCompleteListener = async (
+        playerName: string,
+        bossDamage: BigNumber,
+        newBossHp: BigNumber,
+        playerDamage: BigNumber,
+        newPlayerHp: BigNumber
+      ) => {
+        await refreshCharacters();
+
+        if (boss && bossDamage) {
+          onAttack(boss.name, bossDamage.toNumber(), newBossHp.toNumber());
+        }
+
+        if (playerDamage) {
+          onAttack(playerName, playerDamage.toNumber(), newPlayerHp.toNumber());
+        }
+      };
+
+      getContract().on('AttackComplete', attackCompleteListener);
+
+      return () => {
+        getContract().off('AttackComplete', attackCompleteListener);
+      };
+    };
+
+    if (boss) {
+      return initializeListeners();
+    }
+  }, [boss]);
 
   return {
     isLoading,
@@ -179,6 +234,8 @@ const useContract = (
     isMinting,
     allCharacters,
     character,
+    allPlayers,
+    unsetCharacter,
     mintCharacter,
     boss,
     attack,

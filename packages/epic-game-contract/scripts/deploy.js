@@ -5,14 +5,14 @@ const main = async () => {
   const gameContract = await gameContractFactory.deploy(
     ["Pinky", "Dexter", "Johnny Bravo"],
     [
-      "https://i.imgur.com/ZK9nGeQ.png",
-      "https://i.imgur.com/HAetvz1.jpg",
-      "https://i.imgur.com/m0tebUo.jpg",
+      "QmafBk5GXj39NDCbCS9TaTH8xoUftdyTuQLEuA7p3hJMCg",
+      "QmcP3VqqdtvNskWitCrw6ogrTVRvZBr6xZb44WZx2JvfzQ",
+      "QmRQJsAobq1ayz1ftZoekx6rG5zyWvGu6MFKpC4KbubHGi",
     ],
     [100, 200, 300], // HP values
     [100, 50, 25], // Attack damage values
     "Gizmo", // Boss name
-    "https://i.imgur.com/7hbca6B.jpg", // Boss image
+    "QmT8nhL8NKevEyE6NYs67KurEueSjtmvnTgc2uu9cXvnaF", // Boss image
     10000, // Boss hp
     50 // Boss attack damage
   );

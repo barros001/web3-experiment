@@ -1,6 +1,7 @@
 const hre = require("hardhat");
 
 const main = async () => {
+  const [owner, randomPerson] = await hre.ethers.getSigners();
   const gameContractFactory = await hre.ethers.getContractFactory("MyEpicGame");
   const gameContract = await gameContractFactory.deploy(
     ["Pinky", "Dexter", "Johnny Bravo"],
@@ -22,6 +23,9 @@ const main = async () => {
   let txn = await gameContract.mintCharacterNFT(2);
   await txn.wait();
 
+  txn = await gameContract.connect(randomPerson).mintCharacterNFT(2);
+  await txn.wait();
+
   let returnedTokenUri = await gameContract.tokenURI(1);
   console.log("Token URI:", returnedTokenUri);
 
@@ -30,6 +34,9 @@ const main = async () => {
 
   txn = await gameContract.attackBoss();
   await txn.wait();
+
+  txn = await gameContract.getAllPlayers();
+  console.log(txn);
 };
 
 main()

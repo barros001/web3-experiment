@@ -1,5 +1,6 @@
 import { FC } from 'react';
 import { Character } from '@modules/game/lib/types';
+import ipfsUrl from '@common/lib/helpers/ipfs-url';
 
 type Props = {
   boss: Character;
@@ -12,7 +13,7 @@ const Boss: FC<Props> = ({ boss }) => {
         <p className="text-white text-2xl mb-4">🔥 {boss.name} 🔥</p>
         <div className="border rounded">
           <img
-            src={boss.imageUri}
+            src={ipfsUrl(boss.imageUri)}
             alt={boss.name}
             className="h-[250px] inline-block"
           />

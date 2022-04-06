@@ -3,6 +3,7 @@ import { Character } from '@modules/game/lib/types';
 import Spinner from '@common/components/Spinner';
 import { useSnackbar } from '@common/components/Snackbar';
 import Alert from '@common/components/Alert';
+import ipfsUrl from '@common/lib/helpers/ipfs-url';
 
 type Props = {
   isMinting?: number;
@@ -36,7 +37,7 @@ const SelectCharacter: FC<Props> = ({
           return (
             <div className="text-center" key={character.index}>
               <img
-                src={character.imageUri}
+                src={ipfsUrl(character.imageUri)}
                 alt={character.name}
                 className="h-[200px] inline-block"
               />
