@@ -19,7 +19,7 @@ const Layout: FC<Props> = ({ selectedMenuItem, children }) => {
             <Link href="/">🦄</Link>
           </div>
           <div className="flex items-center">
-            <Link href="/wave">
+            <Link href="/ethereum/wave">
               <a
                 className={`mr-5 text-base font-medium text-gray-500 hover:text-gray-900 ${
                   selectedMenuItem === 'wave' ? 'text-gray-900' : null
@@ -28,7 +28,7 @@ const Layout: FC<Props> = ({ selectedMenuItem, children }) => {
                 Wave @ Me!
               </a>
             </Link>
-            <Link href="/nft">
+            <Link href="/ethereum/nft">
               <a
                 className={`mr-5 text-base font-medium text-gray-500 hover:text-gray-900 ${
                   selectedMenuItem === 'nft' ? 'text-gray-900' : null
@@ -37,13 +37,22 @@ const Layout: FC<Props> = ({ selectedMenuItem, children }) => {
                 Mint an NFT
               </a>
             </Link>
-            <Link href="/game">
+            <Link href="/ethereum/game">
               <a
                 className={`mr-5 text-base font-medium text-gray-500 hover:text-gray-900 ${
                   selectedMenuItem === 'game' ? 'text-gray-900' : null
                 }`}
               >
                 NFT Game
+              </a>
+            </Link>
+            <Link href="/solana/gifs">
+              <a
+                className={`mr-5 text-base font-medium text-gray-500 hover:text-gray-900 ${
+                  selectedMenuItem === 'gifs' ? 'text-gray-900' : null
+                }`}
+              >
+                GIFs
               </a>
             </Link>
             <a
