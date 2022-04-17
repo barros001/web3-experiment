@@ -133,7 +133,7 @@ const Layout: FC<Props> = ({ children }) => {
                       return (
                         <div key={menu.name} className="pt-4">
                           <p className="font-bold mb-2">{menu.name}</p>
-                          {menu.children.map((item) => {
+                          {menu.children?.map((item) => {
                             return (
                               <a
                                 key={item.name}
