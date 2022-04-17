@@ -14,7 +14,7 @@ const Layout: FC<Props> = ({ children }) => {
   const { items } = useSnackbar();
 
   return (
-    <div>
+    <div className="container">
       <Popover className="relative bg-white">
         <div className="mx-auto px-4 sm:px-6">
           <div className="flex justify-between items-center border-b-2 border-gray-100 py-6 md:justify-start md:space-x-10">
