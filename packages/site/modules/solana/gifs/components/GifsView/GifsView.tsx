@@ -2,7 +2,7 @@ import { FC } from 'react';
 import WalletRequired from '@common/components/WalletRequired';
 import { NextSeo } from 'next-seo';
 import Phantom from '@common/lib/wallet/providers/phantom';
-import Gifs from './Gifts';
+import Gifs from './Gifs';
 
 type Props = {};
 

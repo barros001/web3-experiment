@@ -32,12 +32,13 @@ const Gifs: FC<Props> = ({ wallet }) => {
         <Form isWorking={isWorking} submitGif={submitGif} />
       </div>
 
+      <ConnectedWallet wallet={wallet} />
+
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 mb-4">
         {gifs.map((gif, key) => {
           return <img src={gif} alt={gif} className="w-full" key={key} />;
         })}
       </div>
-      <ConnectedWallet wallet={wallet} />
     </>
   );
 };
