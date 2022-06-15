@@ -41,10 +41,11 @@ const buildWalletContext = (walletProvider: WalletProvider) => {
         }
       };
 
-      initialize();
+      window.addEventListener('load', initialize);
 
       return () => {
         walletProvider.cleanup();
+        window.removeEventListener('load', initialize);
       };
     }, [isWalletInstalled]);
 
