@@ -5,20 +5,20 @@ import { useSnackbar } from '@common/components/Snackbar';
 
 type Props = {
   isWorking: boolean;
-  submitGif: (url: string) => Promise<void>;
+  addGif: (url: string) => Promise<void>;
 };
 
-const Gifs: FC<Props> = ({ isWorking, submitGif }) => {
+const Gifs: FC<Props> = ({ isWorking, addGif }) => {
   const [url, setUrl] = useState<string>('');
   const { addItem } = useSnackbar();
 
-  const doSubmitGif = async () => {
+  const doAddGif = async () => {
     if (!url) {
       return;
     }
 
     try {
-      await submitGif(url);
+      await addGif(url);
       setUrl('');
       addItem(<Alert type="success">GIF successfully submitted!</Alert>);
     } catch (e) {
@@ -45,7 +45,7 @@ const Gifs: FC<Props> = ({ isWorking, submitGif }) => {
       <form
         onSubmit={(e) => {
           e.preventDefault();
-          doSubmitGif();
+          doAddGif();
         }}
       >
         <div className="mb-4">
