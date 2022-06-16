@@ -1,4 +1,4 @@
-import { Context } from 'react';
+import { Context, FC } from 'react';
 import { WalletContext } from '@common/lib/wallet/context';
 
 export type Wallet = {
@@ -22,4 +22,5 @@ export interface WalletProvider {
   onWalletChanged: (listener: (wallet: Wallet | undefined) => void) => void;
   cleanup: () => void;
   getChainName: (chainId: string) => string;
+  getConnectWalletComponent?: FC;
 }

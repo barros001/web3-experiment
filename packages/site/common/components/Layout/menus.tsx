@@ -45,6 +45,12 @@ const menus: MenuItem[] = [
         href: '/solana/gifs',
         icon: '🖼',
       },
+      {
+        name: 'Emoji Store',
+        description: 'The only emoji store that accepts sh*tcoins',
+        href: '/solana/emoji',
+        icon: '😳',
+      },
     ],
   },
 ];

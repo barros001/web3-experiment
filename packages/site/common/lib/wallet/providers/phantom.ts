@@ -93,7 +93,9 @@ const onWalletChanged = (
 };
 
 const cleanup = () => {
-  assertIsInstalled();
+  if (!isInstalled()) {
+    return;
+  }
 
   getProvider().removeAllListeners();
   listeners.length = 0;

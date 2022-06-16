@@ -36,7 +36,11 @@ const WalletRequired: FC<Props> = ({ walletProvider, chainId, children }) => {
   if (!wallet) {
     return (
       <div className="text-center">
-        <ConnectWalletButton connect={connect} />
+        {walletProvider.getConnectWalletComponent ? (
+          walletProvider.getConnectWalletComponent({})
+        ) : (
+          <ConnectWalletButton connect={connect} />
+        )}
       </div>
     );
   }
