@@ -4,12 +4,15 @@ import {
   Connection,
   PublicKey,
   Transaction,
-  SystemProgram,
-  LAMPORTS_PER_SOL,
 } from '@solana/web3.js';
 import BigNumber from 'bignumber.js';
 import schema from './schema';
 import products from '../products/products.json';
+import {
+  createTransferCheckedInstruction,
+  getAssociatedTokenAddress,
+  getMint,
+} from '@solana/spl-token';
 
 export default async function handler(req: any, res: any) {
   if (req.method === 'POST') {
@@ -33,6 +36,9 @@ export default async function handler(req: any, res: any) {
       const endpoint = clusterApiUrl(network);
       const connection = new Connection(endpoint);
 
+      const usdcAddress = new PublicKey(process.env.SOLANA_USDC_ADDRESS!);
+      const usdcMint = await getMint(connection, usdcAddress);
+
       const { blockhash } = await connection.getLatestBlockhash('finalized');
 
       const tx = new Transaction({
@@ -40,11 +46,17 @@ export default async function handler(req: any, res: any) {
         feePayer: buyerPublicKey,
       });
 
-      const transferInstruction = SystemProgram.transfer({
-        fromPubkey: buyerPublicKey,
-        lamports: bigAmount.multipliedBy(LAMPORTS_PER_SOL).toNumber(),
-        toPubkey: new PublicKey(process.env.SOLANA_EMOJI_SELLER_ID!),
-      });
+      const transferInstruction = createTransferCheckedInstruction(
+        await getAssociatedTokenAddress(usdcAddress, buyerPublicKey),
+        usdcAddress,
+        await getAssociatedTokenAddress(
+          usdcAddress,
+          new PublicKey(process.env.SOLANA_EMOJI_SELLER_ADDRESS!)
+        ),
+        buyerPublicKey,
+        bigAmount.toNumber() * 10 ** usdcMint.decimals,
+        usdcMint.decimals
+      );
 
       transferInstruction.keys.push({
         pubkey: new PublicKey(value.orderId),
