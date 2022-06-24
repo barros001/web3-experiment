@@ -6,17 +6,19 @@ import {
   Transaction,
 } from '@solana/web3.js';
 import BigNumber from 'bignumber.js';
-import schema from './schema';
-import products from '../products/products.json';
+import { OrderSchema } from '@modules/solana/emoji/lib/schemas';
 import {
   createTransferCheckedInstruction,
   getAssociatedTokenAddress,
   getMint,
 } from '@solana/spl-token';
+import { Product } from '@modules/solana/emoji/lib/types';
+
+const products: Product[] = require('../products.json');
 
 export default async function handler(req: any, res: any) {
   if (req.method === 'POST') {
-    const { error, value } = schema.validate(req.body);
+    const { error, value } = OrderSchema.validate(req.body);
 
     if (error) {
       return res.status(400).json(error);

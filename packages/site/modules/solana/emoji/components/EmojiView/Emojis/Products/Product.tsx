@@ -1,12 +1,13 @@
 import { FC } from 'react';
-import { Product } from '@modules/solana/emoji/lib/types';
+import { Order, Product } from '@modules/solana/emoji/lib/types';
 import Buy from '@modules/solana/emoji/components/EmojiView/Emojis/Products/Buy';
 
 type Props = {
+  wallet: string;
   product: Product;
 };
 
-const Product: FC<Props> = ({ product }) => {
+const Product: FC<Props> = ({ wallet, product }) => {
   return (
     <span className="p-4 border rounded">
       <img src={product.imageUrl} alt={product.name} className="w-full mb-4" />
@@ -14,7 +15,7 @@ const Product: FC<Props> = ({ product }) => {
       <p className="text-center text-sm mb-4">{product.description}</p>
       <div className="grid grid-cols-2 items-center">
         <span className="text-center">{product.price.toFixed(2)} USDC</span>
-        <Buy productId={product.id} />
+        <Buy wallet={wallet} productId={product.id} />
       </div>
     </span>
   );

@@ -1,4 +1,5 @@
-import products from './products.json';
+import { Product } from '@modules/solana/emoji/lib/types';
+const products: Product[] = require('../products.json');
 
 export default function handler(req: any, res: any) {
   if (req.method === 'GET') {

@@ -18,7 +18,7 @@ const Emojis: FC<Props> = ({ wallet }) => {
   return (
     <div>
       <ConnectedWallet wallet={wallet} />
-      <Products products={products} />
+      <Products wallet={wallet} products={products} />
     </div>
   );
 };

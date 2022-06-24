@@ -1,21 +1,19 @@
-import { useEffect, useState } from 'react';
 import { Product } from '@modules/solana/emoji/lib/types';
+import useSWR from 'swr';
 
 const useProducts = () => {
-  const [products, setProducts] = useState<Array<Product>>([]);
-  const [isLoading, setIsLoading] = useState<boolean>(true);
-
-  useEffect(() => {
-    fetch('/api/solana/emoji/products')
-      .then((response) => response.json())
-      .then((data) => {
-        setProducts(data);
-        setIsLoading(false);
-      });
-  }, []);
+  const { data: products, error } = useSWR<Product[]>(
+    ['/api/solana/emoji/products'],
+    async (...args) => {
+      return await fetch(args[0]).then((response) => response.json());
+    },
+    {
+      revalidateOnFocus: false,
+    }
+  );
 
   return {
-    isLoading,
+    isLoading: !products && !error,
     products,
   };
 };
