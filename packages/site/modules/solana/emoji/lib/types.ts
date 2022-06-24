@@ -7,3 +7,7 @@ export type Product = {
   filename: string;
   hash: string;
 };
+
+export type PurchaseResponse = {
+  transaction: string;
+};

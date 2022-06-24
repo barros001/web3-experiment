@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import { Product } from '@modules/solana/emoji/lib/types';
-import Download from '@modules/solana/emoji/components/EmojiView/Emojis/Products/Download';
+import Buy from '@modules/solana/emoji/components/EmojiView/Emojis/Products/Buy';
 
 type Props = {
   product: Product;
@@ -14,10 +14,7 @@ const Product: FC<Props> = ({ product }) => {
       <p className="text-center text-sm mb-4">{product.description}</p>
       <div className="grid grid-cols-2 items-center">
         <span className="text-center">{product.price.toFixed(2)} USDC</span>
-        <Download
-          hash={'QmWWH69mTL66r3H8P4wUn24t1L5pvdTJGUTKBqT11KCHS5'}
-          filename={'emojis.zip'}
-        />
+        <Buy productId={product.id} />
       </div>
     </span>
   );
